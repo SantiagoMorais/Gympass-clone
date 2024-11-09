@@ -16,7 +16,17 @@
 
 ## Dependencies
 
+- [Fastify](https://fastify.dev): Web framework for Node.js used to create APIs and HTTP servers (similar to Express.js) with support for TypeScript typing.
+
 ## Dev Dependencies
+
+- [ESLint](https://eslint.org/): Code analysis tool responsible for identifying errors and inconsistencies.
+
+- [Prettier](https://prettier.io/): Code formatting tool that ensures code style consistency.
+
+- [tsup](https://tsup.egoist.dev): Tool for optimizing TypeScript projects, allowing the build process (converting TS to JS). It also uses **esbuild**, which speeds up processes and facilitates TypeScript development.
+
+- [Typescript](https://www.typescriptlang.org/): A strong typed programming language that builds on JavaScript
 
 ## Project Objectives
 
