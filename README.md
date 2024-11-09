@@ -18,6 +18,10 @@
 
 - [Fastify](https://fastify.dev): Web framework for Node.js used to create APIs and HTTP servers (similar to Express.js) with support for TypeScript typing.
 
+- [dotent](https://www.npmjs.com/package/dotenv): A module that loads environment variables from a `.env` file into `process.env`.
+
+- [zod](https://zod.dev/): Module if schema and data validation to guarantee data security.
+
 ## Dev Dependencies
 
 - [ESLint](https://eslint.org/): Code analysis tool responsible for identifying errors and inconsistencies.
