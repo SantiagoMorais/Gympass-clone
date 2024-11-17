@@ -22,6 +22,8 @@
 
 - [zod](https://zod.dev/): Module if schema and data validation to guarantee data security.
 
+- [Prisma client](https://www.prisma.io/docs/orm/prisma-client): Is an auto-generated, type-safe query builder generated based on the models and attributes of the our Prisma schema.
+
 ## Dev Dependencies
 
 - [ESLint](https://eslint.org/): Code analysis tool responsible for identifying errors and inconsistencies.
@@ -31,6 +33,8 @@
 - [tsup](https://tsup.egoist.dev): Tool for optimizing TypeScript projects, allowing the build process (converting TS to JS). It also uses **esbuild**, which speeds up processes and facilitates TypeScript development.
 
 - [Typescript](https://www.typescriptlang.org/): A strong typed programming language that builds on JavaScript
+
+- [Prisma](https://www.prisma.io/?via=start&gad_source=1): It simplify database queries, migrations, subscriptions, query catching and more.
 
 ## Project Objectives
 
