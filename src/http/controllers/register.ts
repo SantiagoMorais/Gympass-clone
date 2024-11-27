@@ -24,12 +24,13 @@ export const register: FastifyPluginAsyncZod = async (app) => {
         const registerUseCase = new RegisterUseCase(usersRepository);
 
         await registerUseCase.execute({ email, name, password });
-        res.status(201).send();
       } catch (error) {
         if (error instanceof UserAlreadyExistsError)
-          return res.status(409).send({ message: error.message});
-        return res.status(500); // TODO: fix me
+          return res.status(409).send({ message: error.message });
+        throw error;
       }
+
+      res.status(201).send();
     }
   );
 };
