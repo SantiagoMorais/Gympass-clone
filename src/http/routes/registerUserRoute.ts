@@ -1,5 +1,5 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { registerUser } from "http/functions/registerUser";
+import { registerUser } from "use-cases/registerUser";
 import { z } from "zod";
 
 export const registerUserRoute: FastifyPluginAsyncZod = async (app) => {
@@ -14,12 +14,15 @@ export const registerUserRoute: FastifyPluginAsyncZod = async (app) => {
         }),
       },
     },
-    (req, res) => {
+    async (req, res) => {
       const { name, email, password } = req.body;
 
-      registerUser({ email, name, password, res });
-
-      return res.status(201).send();
+      try {
+        await registerUser({ email, name, password });
+        res.status(201).send();
+      } catch (error) {
+        return res.status(409).send();
+      }
     }
   );
 };

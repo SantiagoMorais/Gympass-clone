@@ -7,8 +7,4 @@ const registerUserSchema = z.object({
   password: z.string().min(6),
 });
 
-type TRegisterUserSchema = z.infer<typeof registerUserSchema>
-
-export interface TRegisterUser extends TRegisterUserSchema {
-    res: FastifyReply
-}
+export type TRegisterUser = z.infer<typeof registerUserSchema>

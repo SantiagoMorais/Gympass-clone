@@ -24,6 +24,8 @@
 
 - [Prisma client](https://www.prisma.io/docs/orm/prisma-client): Is an auto-generated, type-safe query builder generated based on the models and attributes of the our Prisma schema.
 
+- [bcryptjs](https://www.npmjs.com/package/bcrypt): A library to help you hash passwords.
+
 ## Dev Dependencies
 
 - [ESLint](https://eslint.org/): Code analysis tool responsible for identifying errors and inconsistencies.
