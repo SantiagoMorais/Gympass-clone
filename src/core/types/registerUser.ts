@@ -7,4 +7,4 @@ const registerUserSchema = z.object({
   password: z.string().min(6),
 });
 
-export type TRegisterUser = z.infer<typeof registerUserSchema>
+export type TRegisterUser = z.infer<typeof registerUserSchema>;

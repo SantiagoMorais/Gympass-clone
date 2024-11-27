@@ -1,6 +1,7 @@
 import { TRegisterUser } from "core/types/registerUser";
 import { prisma } from "lib/prisma";
 import { hash } from "bcrypt";
+import { PrismaUsersRepository } from "repositories/prisma-users-repository";
 
 export const registerUser = async ({
   email,
@@ -15,13 +16,13 @@ export const registerUser = async ({
     },
   });
 
-  if (userWithSameEmail) throw new Error("E-mail already exists.")
+  if (userWithSameEmail) throw new Error("E-mail already exists.");
 
-  await prisma.user.create({
-    data: {
-      name,
-      email,
-      password_hash,
-    },
+  const prismaUsersRepository = new PrismaUsersRepository();
+
+  await prismaUsersRepository.create({
+    email,
+    name,
+    password_hash,
   });
 };
