@@ -11,6 +11,7 @@
 - [Dev Dependencies](#dev-dependencies)
 - [Project Objectives](#project-objectives)
 - [Routes](#routes)
+- [Solid](#solid)
 - [How to run the project?](#how-to-run-the-project)
 - [Author](#author)
 
@@ -84,6 +85,10 @@ Technical requirements independent of the client, focusing on performance, relia
 - [ ] The user must be identified by a JWT (JSON Web Token);
 
 ## Routes
+
+## Solid
+- D: Dependency Inversion Principle
+
 
 ## How to run the project?
 

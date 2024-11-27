@@ -1,5 +1,6 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { registerUser } from "use-cases/registerUser";
+import { PrismaUsersRepository } from "repositories/prisma-users-repository";
+import { RegisterUseCase } from "use-cases/register";
 import { z } from "zod";
 
 export const registerUserRoute: FastifyPluginAsyncZod = async (app) => {
@@ -18,7 +19,10 @@ export const registerUserRoute: FastifyPluginAsyncZod = async (app) => {
       const { name, email, password } = req.body;
 
       try {
-        await registerUser({ email, name, password });
+        const usersRepository = new PrismaUsersRepository();
+        const registerUseCase = new RegisterUseCase(usersRepository);
+
+        await registerUseCase.execute({ email, name, password });
         res.status(201).send();
       } catch (error) {
         return res.status(409).send();
