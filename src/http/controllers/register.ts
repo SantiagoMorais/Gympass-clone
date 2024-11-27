@@ -1,5 +1,6 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { PrismaUsersRepository } from "repositories/prisma/prisma-users-repository";
+import { UserAlreadyExistsError } from "use-cases/errors/user-already-exists-error";
 import { RegisterUseCase } from "use-cases/register";
 import { z } from "zod";
 
@@ -25,7 +26,9 @@ export const register: FastifyPluginAsyncZod = async (app) => {
         await registerUseCase.execute({ email, name, password });
         res.status(201).send();
       } catch (error) {
-        return res.status(409).send();
+        if (error instanceof UserAlreadyExistsError)
+          return res.status(409).send({ message: error.message});
+        return res.status(500); // TODO: fix me
       }
     }
   );
