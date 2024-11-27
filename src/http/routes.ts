@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { registerUserRoute } from "http/routes/registerUserRoute";
+import { register } from "http/controllers/register";
 
 export const appRoutes = async (app: FastifyInstance) => {
-  app.register(registerUserRoute);
+  app.register(register);
 };

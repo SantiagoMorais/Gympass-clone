@@ -1,9 +1,9 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { PrismaUsersRepository } from "repositories/prisma-users-repository";
+import { PrismaUsersRepository } from "repositories/prisma/prisma-users-repository";
 import { RegisterUseCase } from "use-cases/register";
 import { z } from "zod";
 
-export const registerUserRoute: FastifyPluginAsyncZod = async (app) => {
+export const register: FastifyPluginAsyncZod = async (app) => {
   app.post(
     "/users",
     {
