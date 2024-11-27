@@ -5,7 +5,7 @@ import {
   validatorCompiler,
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
-import { registerUserRoute } from "routes/registerUserRoute";
+import { appRoutes } from "http/routes";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -17,4 +17,4 @@ app.register(fastifyCors, {
   credentials: true,
 });
 
-app.register(registerUserRoute);
+app.register(appRoutes);

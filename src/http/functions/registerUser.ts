@@ -14,6 +14,4 @@ export const registerUser = async ({
       password_hash: password,
     },
   });
-
-  return res.status(201).send();
 };
