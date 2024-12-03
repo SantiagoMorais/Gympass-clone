@@ -8,7 +8,6 @@ import {
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import { appRoutes } from "http/routes";
-import { ZodError } from "zod";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
