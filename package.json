@@ -8,7 +8,7 @@
     "build": "tsup src --out-dir build",
     "server": "node build/server.cjs",
     "test": "vitest run",
-    "text:watch": "vitest"
+    "test:watch": "vitest"
   },
   "keywords": [
     "fastify",
