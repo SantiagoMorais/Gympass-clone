@@ -11,7 +11,7 @@
 - [Dev Dependencies](#dev-dependencies)
 - [Project Objectives](#project-objectives)
 - [Routes](#routes)
-- [Solid](#solid)
+- [Folders Organization](#folders-organization)
 - [How to run the project?](#how-to-run-the-project)
 - [Author](#author)
 
@@ -24,8 +24,6 @@
 - [zod](https://zod.dev/): Module if schema and data validation to guarantee data security.
 
 - [Prisma client](https://www.prisma.io/docs/orm/prisma-client): Is an auto-generated, type-safe query builder generated based on the models and attributes of the our Prisma schema.
-
-- [bcryptjs](https://www.npmjs.com/package/bcrypt): A library to help you hash passwords.
 
 ## Dev Dependencies
 
@@ -86,8 +84,78 @@ Technical requirements independent of the client, focusing on performance, relia
 
 ## Routes
 
-## Solid
-- D: Dependency Inversion Principle
+## Folders Organization
+
+- lib: To configure and initialize the prisma client. The prisma instance is exported to be used during the project to interact with the database, realizing queries, exclusions, updates and even more.
+- http: Responsible for managing everything related to HTTP requests and responses, including:
+  - Controllers
+  - Routes - Contains every individual route of the application
+  - routes.ts - Responsable to handle with all app routes.
+- http/controllers: Responsible for handling incoming data (requests) from a route and sending an appropriate response (reply) back. Basicaly is the arrow functions after the route declaration inside a route. Example:
+
+```ts
+// app.post(
+//   "./users",
+//   {
+//     schema: {
+//       body: z.object({
+//         name: z.string(),
+//         email: z.string().email(),
+//         password: z.string().min(6),
+//       }),
+//     },
+//   },
+// * This is the controller in this route
+async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const emailAlreadyExists = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  if (emailAlreadyExists)
+    return res.status(409).send({ message: "Email already registered" });
+
+  const password_hash = await bcrypt.hash(password, 6);
+
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password_hash,
+    },
+  });
+
+  return res.status(201).send();
+};
+// * This is the controller in this route
+// );
+```
+
+- Use-cases (or **services**): Handle business logic and data manipulation within the controller. The idea is to decouple this logic from the HTTP layer, making it reusable across different parts of the application. For example, the user creation logic in the controller above could be needed elsewhere, like in background jobs or other services. By separating the logic into use-cases, it can be reused without being tied to a specific HTTP request. Example of what part of the controller the use-case is:
+
+```ts
+const emailAlreadyExists = await prisma.user.findUnique({
+  where: { id },
+});
+
+if (emailAlreadyExists)
+  return res.status(409).send({ message: "Email already registered" });
+
+const password_hash = await bcrypt.hash(password, 6);
+
+await prisma.user.create({
+  data: {
+    name,
+    email,
+    password_hash,
+  },
+});
+```
+
+The reply is used here, but it is specific of a HTTP Request. But, the idea is to **decouple** this logic from the HTTP layer, making it reusable across different parts of the application.
+
+- Repositories: Implement the Repository Pattern, encapsulating the data access logic. This allows the code to be decoupled from the specifics of the ORM or data source, making it easier to switch or modify data storage technologies without affecting other parts of the application.
 
 
 ## How to run the project?
