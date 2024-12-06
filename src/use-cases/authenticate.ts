@@ -1,16 +1,10 @@
+import bcrypt from "bcrypt";
 import { UsersRepository } from "repositories/users-repository";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
-import bcrypt from "bcrypt";
-import { User } from "@prisma/client";
-
-interface IAuthenticateUseCaseRequest {
-  email: string;
-  password: string;
-}
-
-interface IAuthenticateUseCaseResponse {
-  user: User;
-}
+import {
+  IAuthenticateUseCaseRequest,
+  IAuthenticateUseCaseResponse,
+} from "core/interfaces/authenticateUseCase";
 
 export class AuthenticateUseCase {
   constructor(private usersRepository: UsersRepository) {}
@@ -28,7 +22,7 @@ export class AuthenticateUseCase {
       user.password_hash
     );
 
-    if (doesPasswordMatches) throw new InvalidCredentialsError();
+    if (!doesPasswordMatches) throw new InvalidCredentialsError();
 
     return {
       user,
