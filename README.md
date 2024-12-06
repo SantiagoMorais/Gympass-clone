@@ -51,7 +51,7 @@ We are working with
 
 Defines what the user can do in the application, outlining the core functionalities available to them.
 
-- [ ] It should be able to register;
+- [x] It should be able to register;
 - [ ] It should be able to authenticate;
 - [ ] It should be able to get the profile of a logged user;
 - [ ] It should be able to get the number of check-ins made by the logged user;
@@ -66,7 +66,7 @@ Defines what the user can do in the application, outlining the core functionalit
 
 Defines the conditions under which each functional requirement operates. Every functional requirement will have an associated business rule to ensure its proper functionality.
 
-- [ ] The user can't register a duplicated e-mail;
+- [x] The user can't register a duplicated e-mail;
 - [ ] The user can't check-in twice a day;
 - [ ] The user will only be able to check in at least 100m away from the gym;
 - [ ] The check-in can be validate just 20 minutes after created;
@@ -77,8 +77,8 @@ Defines the conditions under which each functional requirement operates. Every f
 
 Technical requirements independent of the client, focusing on performance, reliability, and scalability rather than functionality.
 
-- [ ] The user password mus be encrypted;
-- [ ] The app data must be persisted in a PostgreSQL database;
+- [x] The user password mus be encrypted;
+- [x] The app data must be persisted in a PostgreSQL database;
 - [ ] Every data lists must be paginated by 20 items per page;
 - [ ] The user must be identified by a JWT (JSON Web Token);
 
