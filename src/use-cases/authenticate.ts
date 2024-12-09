@@ -4,7 +4,7 @@ import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 import {
   IAuthenticateUseCaseRequest,
   IAuthenticateUseCaseResponse,
-} from "core/interfaces/authenticateUseCase";
+} from "core/interfaces/authenticate-use-case";
 
 export class AuthenticateUseCase {
   constructor(private usersRepository: UsersRepository) {}

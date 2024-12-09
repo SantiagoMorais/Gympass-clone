@@ -53,7 +53,7 @@ We are working with
 Defines what the user can do in the application, outlining the core functionalities available to them.
 
 - [x] It should be able to register;
-- [ ] It should be able to authenticate;
+- [x] It should be able to authenticate;
 - [ ] It should be able to get the profile of a logged user;
 - [ ] It should be able to get the number of check-ins made by the logged user;
 - [ ] It should be able for the user get his check-in history;
