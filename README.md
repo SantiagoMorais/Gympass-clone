@@ -12,6 +12,7 @@
 - [Project Objectives](#project-objectives)
 - [Routes](#routes)
 - [Folders Organization](#folders-organization)
+- [Patters](#patterns)
 - [How to run the project?](#how-to-run-the-project)
 - [Author](#author)
 
@@ -157,6 +158,43 @@ The reply is used here, but it is specific of a HTTP Request. But, the idea is t
 
 - Repositories: Implement the Repository Pattern, encapsulating the data access logic. This allows the code to be decoupled from the specifics of the ORM or data source, making it easier to switch or modify data storage technologies without affecting other parts of the application.
 
+## Patters
+
+- **Factory Pattern (FP)**: A Creational Design Pattern used to centralize the creation of objects that share common characteristics and dependencies. It is particularly useful when a part of the code is used in multiple parts of an application and involves complex or numerous dependencies. By using the Factory Pattern, we can encapsulate the object creation logic, making the codebase more modular, maintainable, and testable. Example:
+
+`./src/http/controllers/register.ts`
+
+```ts
+try {
+  const usersRepository = new PrismaUsersRepository();
+  const registerUseCase = new RegisterUseCase(usersRepository);
+  // These two instances is used every time that we want to register a user. We can encapsulate this logic into a function
+
+  await registerUseCase.execute({ email, name, password });
+}
+```
+
+`./src/use-cases/factories/make-register-use-case.ts`
+
+```ts
+export const makeRegisterUseCase = () => {
+  const usersRepository = new PrismaUsersRepository();
+  const registerUseCase = new RegisterUseCase(usersRepository);
+
+  return registerUseCase;
+};
+```
+
+Now it's just necessary call the `makeFactoryUseCase` function:
+
+```ts
+  try {
+    const registerUseCase = makeRegisterUseCase();
+    await registerUseCase.execute({ email, name, password });
+  }
+```
+
+In this example, we are using just two instances, two dependencies, but soon there are be some parts of the code that will be necessary at most 5 of them. To encapsulate this using **FP** turns the code clean.
 
 ## How to run the project?
 
