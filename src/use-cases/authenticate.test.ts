@@ -1,14 +1,19 @@
 import { inMemoryUsersRepository } from "repositories/in-memory/in-memory-users-repository";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { AuthenticateUseCase } from "./authenticate";
 import bcrypt from "bcrypt";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 
-describe("Autheticate Use Case", () => {
-  it("should be able to authenticate", async () => {
-    const usersRepository = new inMemoryUsersRepository();
-    const sut = new AuthenticateUseCase(usersRepository);
+let usersRepository: inMemoryUsersRepository;
+let sut: AuthenticateUseCase;
 
+describe("Autheticate Use Case", () => {
+  beforeEach(() => {
+    usersRepository = new inMemoryUsersRepository();
+    sut = new AuthenticateUseCase(usersRepository);
+  });
+
+  it("should be able to authenticate", async () => {
     await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -23,11 +28,8 @@ describe("Autheticate Use Case", () => {
     expect(user.id).toEqual(expect.any(String));
   });
 
-  it.only("should not be able to authenticate with wrong email", async () => {
-    const usersRepository = new inMemoryUsersRepository();
-    const sut = new AuthenticateUseCase(usersRepository);
-
-    expect(async () => {
+  it("should not be able to authenticate with wrong email", async () => {
+    await expect(async () => {
       await sut.execute({
         email: "johndoe@example.com",
         password: "123456",
@@ -35,15 +37,12 @@ describe("Autheticate Use Case", () => {
     }).rejects.toBeInstanceOf(InvalidCredentialsError);
   });
 
-  it.only("should not be able to authenticate with wrong password", async () => {
-    const usersRepository = new inMemoryUsersRepository();
-    const sut = new AuthenticateUseCase(usersRepository);
-
+  it("should not be able to authenticate with wrong password", async () => {
     await usersRepository.create({
-        name: "John Doe",
-        email: "johndoe@example.com",
-        password_hash: await bcrypt.hash("123456", 6),
-      });
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await bcrypt.hash("123456", 6),
+    });
 
     expect(async () => {
       await sut.execute({
