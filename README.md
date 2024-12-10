@@ -59,7 +59,7 @@ Defines what the user can do in the application, outlining the core functionalit
 - [ ] It should be able for the user get his check-in history;
 - [ ] It should be able for the user search close gyms;
 - [ ] It should be able for the user search gyms by its name;
-- [ ] It should be able for the user to check-in into a gym;
+- [x] It should be able for the user to check-in into a gym;
 - [ ] It should be able to validate the user check-in;
 - [ ] It should be able to register a gym;
 
