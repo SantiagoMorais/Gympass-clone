@@ -68,7 +68,7 @@ Defines what the user can do in the application, outlining the core functionalit
 Defines the conditions under which each functional requirement operates. Every functional requirement will have an associated business rule to ensure its proper functionality.
 
 - [x] The user can't register a duplicated e-mail;
-- [ ] The user can't check-in twice a day;
+- [x] The user can't check-in twice a day;
 - [ ] The user will only be able to check in at least 100m away from the gym;
 - [ ] The check-in can be validate just 20 minutes after created;
 - [ ] The check-in can only be validade by a administrator;
