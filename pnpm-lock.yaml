@@ -29,6 +29,9 @@ importers:
       fastify-type-provider-zod:
         specifier: 4.0.2
         version: 4.0.2(fastify@5.1.0)(zod@3.23.8)
+      geolib:
+        specifier: 3.3.4
+        version: 3.3.4
       vitest:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.9.0)(@vitest/ui@2.1.8)
@@ -1288,6 +1291,9 @@ packages:
     resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}
     engines: {node: '>=10'}
     deprecated: This package is no longer supported.
+
+  geolib@3.3.4:
+    resolution: {integrity: sha512-EicrlLLL3S42gE9/wde+11uiaYAaeSVDwCUIv2uMIoRBfNJCn8EsSI+6nS3r4TCKDO6+RQNM9ayLq2at+oZQWQ==}
 
   get-tsconfig@4.8.1:
     resolution: {integrity: sha512-k9PN+cFBmaLWtVz29SkUoqU5O0slLuHJXt/2P+tMVFT+phsSGXGkp9t3rQIqdz0e+06EHNGs3oM6ZX1s2zHxRg==}
@@ -3175,6 +3181,8 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wide-align: 1.1.5
+
+  geolib@3.3.4: {}
 
   get-tsconfig@4.8.1:
     dependencies:

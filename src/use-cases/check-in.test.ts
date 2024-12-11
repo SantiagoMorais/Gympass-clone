@@ -1,10 +1,8 @@
-import { CheckInsRepository } from "repositories/check-ins-repository";
+import { Decimal } from "@prisma/client/runtime/library";
+import { InMemoryCheckInsRepository } from "repositories/in-memory/in-memory-check-ins-repository";
+import { inMemoryGymsRepository } from "repositories/in-memory/in-memory-gyms-repository";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CheckInUseCase } from "./check-in";
-import { InMemoryCheckInsRepository } from "repositories/in-memory/in-memory-check-ins-repository";
-import { GymsRepository } from "repositories/gyms-repository";
-import { inMemoryGymsRepository } from "repositories/in-memory/in-memory-gyms-repository";
-import { Decimal } from "@prisma/client/runtime/library";
 
 let checkInsRespository: InMemoryCheckInsRepository;
 let gymsRepository: inMemoryGymsRepository;
@@ -19,8 +17,8 @@ describe("Check In Use Case", () => {
     gymsRepository.gyms.push({
       id: "gym-01",
       description: "",
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: new Decimal(-14.235),
+      longitude: new Decimal(-51.9253),
       phone: "",
       title: "Test Gym",
     });
@@ -83,5 +81,25 @@ describe("Check In Use Case", () => {
     });
 
     expect(checkIn.id).toEqual(expect.any(String));
+  });
+
+  it("should not be able to check in far from the gym", async () => {
+    gymsRepository.gyms.push({
+      id: "gym-02",
+      description: "",
+      latitude: new Decimal(40.748817),
+      longitude: new Decimal(-73.985428),
+      phone: "",
+      title: "Test Gym",
+    }); // Empire State Building, NY, USA
+
+    expect(async () => {
+      await sut.execute({
+        userId: "user-01",
+        gymId: "gym-02",
+        userLatitude: 51.507351,
+        userLongitude: -0.127758,
+      }); // Buckingham Palace, London, United Kingdom
+    }).rejects.toBeInstanceOf(Error);
   });
 });

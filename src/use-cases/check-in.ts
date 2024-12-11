@@ -5,6 +5,7 @@ import {
 import { CheckInsRepository } from "repositories/check-ins-repository";
 import { GymsRepository } from "repositories/gyms-repository";
 import { ResourceNorFoundError } from "./errors/resource-not-found-error";
+import { getDistanceBetweenCoordinates } from "utils/get-distance-between-coordinates";
 
 export class CheckInUseCase {
   constructor(
@@ -22,8 +23,14 @@ export class CheckInUseCase {
 
     if (!gym) throw new ResourceNorFoundError();
 
-    // calculate distance between the gym and user
-    // The distance cannot be larger than 100m
+    const distance = getDistanceBetweenCoordinates(
+      { latitude: userLatitude, longitude: userLongitude },
+      { latitude: Number(gym.latitude), longitude: Number(gym.longitude) }
+    );
+
+    const MAX_DISTANCE_IN_METERS = 100;
+
+    if (distance > MAX_DISTANCE_IN_METERS) throw new Error();
 
     const checkInOnSameDate = await this.checkInsRepository.findByUserIdOnDate(
       userId,
