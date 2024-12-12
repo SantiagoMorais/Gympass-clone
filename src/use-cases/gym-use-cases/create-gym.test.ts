@@ -2,7 +2,7 @@ import { GymsRepository } from "repositories/gyms-repository";
 import { inMemoryGymsRepository } from "repositories/in-memory/in-memory-gyms-repository";
 import { CreateGymUseCase } from "./create-gym";
 import { describe } from "node:test";
-import { beforeEach, it } from "vitest";
+import { beforeEach, expect, it } from "vitest";
 import { Decimal } from "@prisma/client/runtime/library";
 
 let gymsRepository: inMemoryGymsRepository;
@@ -22,5 +22,7 @@ describe("Create Gym Use Case", () => {
       description: null,
       phone: null,
     });
+
+    expect(gym.id).toEqual(expect.any(String));
   });
 });

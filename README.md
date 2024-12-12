@@ -58,7 +58,7 @@ Defines what the user can do in the application, outlining the core functionalit
 - [x] It should be able to get the number of check-ins made by the logged user;
 - [x] It should be able for the user get his check-in history;
 - [ ] It should be able for the user search close gyms;
-- [ ] It should be able for the user search gyms by its name;
+- [x] It should be able for the user search gyms by its name;
 - [x] It should be able for the user to check-in into a gym;
 - [ ] It should be able to validate the user check-in;
 - [x] It should be able to register a gym;
