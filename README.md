@@ -60,7 +60,7 @@ Defines what the user can do in the application, outlining the core functionalit
 - [x] It should be able for the user search close gyms at most 10km;
 - [x] It should be able for the user search gyms by its name;
 - [x] It should be able for the user to check-in into a gym;
-- [ ] It should be able to validate the user check-in;
+- [x] It should be able to validate the user check-in;
 - [x] It should be able to register a gym;
 
 ### Business Rules
