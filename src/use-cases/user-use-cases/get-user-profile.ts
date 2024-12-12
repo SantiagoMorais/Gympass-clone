@@ -3,7 +3,7 @@ import {
   IGetUserProfileUseCaseResponse,
 } from "core/interfaces/get-user-profile-use-case";
 import { UsersRepository } from "repositories/users-repository";
-import { ResourceNorFoundError } from "./errors/resource-not-found-error";
+import { ResourceNotFoundError } from "../errors/resource-not-found-error";
 
 export class GetUserProfile {
   constructor(private usersRepository: UsersRepository) {}
@@ -13,7 +13,7 @@ export class GetUserProfile {
   }: IGetUserProfileUseCaseRequest): Promise<IGetUserProfileUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
-    if (!user) throw new ResourceNorFoundError();
+    if (!user) throw new ResourceNotFoundError();
 
     return { user };
   }

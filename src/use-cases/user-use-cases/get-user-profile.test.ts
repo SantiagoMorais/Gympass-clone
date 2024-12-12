@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { inMemoryUsersRepository } from "repositories/in-memory/in-memory-users-repository";
 import { beforeEach, describe, expect, it } from "vitest";
-import { ResourceNorFoundError } from "./errors/resource-not-found-error";
+import { ResourceNotFoundError } from "../errors/resource-not-found-error";
 import { GetUserProfile } from "./get-user-profile";
 
 let usersRepository: inMemoryUsersRepository;
@@ -26,10 +26,11 @@ describe("Get User Profile Use Case", () => {
   });
 
   it("should not be able to get user profile with wrong id", async () => {
-    expect(async () =>
-      await sut.execute({
-        userId: "non-existent-id",
-      })
-    ).rejects.toBeInstanceOf(ResourceNorFoundError);
+    expect(
+      async () =>
+        await sut.execute({
+          userId: "non-existent-id",
+        })
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

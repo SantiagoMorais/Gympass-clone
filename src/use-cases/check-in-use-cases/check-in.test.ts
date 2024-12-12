@@ -3,23 +3,25 @@ import { InMemoryCheckInsRepository } from "repositories/in-memory/in-memory-che
 import { inMemoryGymsRepository } from "repositories/in-memory/in-memory-gyms-repository";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CheckInUseCase } from "./check-in";
+import { MaxNumberOfCheckInsError } from "use-cases/errors/max-number-of-check-ins-error";
+import { MaxDistanceError } from "use-cases/errors/max-distance-error";
 
 let checkInsRespository: InMemoryCheckInsRepository;
 let gymsRepository: inMemoryGymsRepository;
 let sut: CheckInUseCase;
 
 describe("Check In Use Case", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     checkInsRespository = new InMemoryCheckInsRepository();
     gymsRepository = new inMemoryGymsRepository();
     sut = new CheckInUseCase(checkInsRespository, gymsRepository);
 
-    gymsRepository.gyms.push({
+    await gymsRepository.create({
       id: "gym-01",
-      description: "",
-      latitude: new Decimal(-14.235),
-      longitude: new Decimal(-51.9253),
-      phone: "",
+      description: null,
+      latitude: -14.235,
+      longitude: -51.9253,
+      phone: null,
       title: "Test Gym",
     });
 
@@ -58,7 +60,7 @@ describe("Check In Use Case", () => {
         userLatitude: -14.235,
         userLongitude: -51.9253,
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(MaxNumberOfCheckInsError);
   });
 
   it("should be able to check in twice into different days", async () => {
@@ -100,6 +102,6 @@ describe("Check In Use Case", () => {
         userLatitude: 51.507351,
         userLongitude: -0.127758,
       }); // Buckingham Palace, London, United Kingdom
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(MaxDistanceError);
   });
 });

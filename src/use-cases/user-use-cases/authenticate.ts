@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { UsersRepository } from "repositories/users-repository";
-import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
+import { InvalidCredentialsError } from "../errors/invalid-credentials-error";
 import {
   IAuthenticateUseCaseRequest,
   IAuthenticateUseCaseResponse,
