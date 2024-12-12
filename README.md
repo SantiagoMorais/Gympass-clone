@@ -70,7 +70,7 @@ Defines the conditions under which each functional requirement operates. Every f
 - [x] The user can't register a duplicated e-mail;
 - [x] The user can't check-in twice a day;
 - [x] The user will only be able to check in at least 100m away from the gym;
-- [ ] The check-in can be validate just 20 minutes after created;
+- [x] The check-in can be validate just 20 minutes after created;
 - [ ] The check-in can only be validade by a administrator;
 - [ ] The gym can only be registered by a administrator;
 
