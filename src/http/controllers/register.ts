@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { UserAlreadyExistsError } from "use-cases/errors/user-already-exists-error";
-import { makeRegisterUseCase } from "use-cases/factories/make-register-use-case";
+import { makeRegisterUseCase } from "use-cases/factories/user/make-register-use-case";
 import { z } from "zod";
 
 export const register: FastifyPluginAsyncZod = async (app) => {
