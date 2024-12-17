@@ -1,34 +1,27 @@
-import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { PrismaUsersRepository } from "repositories/prisma/prisma-users-repository";
-import { AuthenticateUseCase } from "use-cases/user-use-cases/authenticate";
+import { FastifyReply, FastifyRequest } from "fastify";
 import { InvalidCredentialsError } from "use-cases/errors/invalid-credentials-error";
 import { makeAuthenticateUseCase } from "use-cases/factories/user/make-authenticate-use-case";
 import { z } from "zod";
 
-export const authenticate: FastifyPluginAsyncZod = async (app) => {
-  app.post(
-    "/sessions",
-    {
-      schema: {
-        body: z.object({
-          email: z.string(),
-          password: z.string(),
-        }),
-      },
-    },
-    async (req, res) => {
-      const { email, password } = req.body;
+const authenticateBodySchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6), 
+});
 
-      try {
-        const authenticateUseCase = makeAuthenticateUseCase();
-        await authenticateUseCase.execute({ email, password });
-      } catch (error) {
-        if (error instanceof InvalidCredentialsError)
-          return res.status(400).send({ message: error.message });
-        throw error;
-      }
+export const authenticate = async (
+  req: FastifyRequest<{ Body: z.infer<typeof authenticateBodySchema> }>,
+  res: FastifyReply
+) => {
+  const { email, password } = req.body;
 
-      res.status(200).send();
-    }
-  );
+  try {
+    const authenticateUseCase = makeAuthenticateUseCase();
+    await authenticateUseCase.execute({ email, password });
+  } catch (error) {
+    if (error instanceof InvalidCredentialsError)
+      return res.status(400).send({ message: error.message });
+    throw error;
+  }
+
+  res.status(200).send();
 };

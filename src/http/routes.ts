@@ -1,8 +1,8 @@
-import { FastifyInstance } from "fastify";
-import { register } from "http/controllers/register";
+import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { authenticate } from "./controllers/authenticate";
+import { register } from "./controllers/register";
 
-export const appRoutes = async (app: FastifyInstance) => {
-  app.register(register);
-  app.register(authenticate);
+export const appRoutes: FastifyPluginAsyncZod = async (app) => {
+  app.post("/sessions", authenticate)
+  app.post("/register", register)
 };
