@@ -1,6 +1,9 @@
 import { hash } from "bcrypt";
 
-import { TRegisterUseCaseResponse, TRegisterUserUseCase } from "core/types/register-user-use-case";
+import {
+  TRegisterUseCaseResponse,
+  TRegisterUserUseCase,
+} from "core/types/register-user-use-case";
 import { UsersRepository } from "repositories/users-repository";
 import { UserAlreadyExistsError } from "../errors/user-already-exists-error";
 

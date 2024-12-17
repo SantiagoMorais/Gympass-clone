@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6), 
+  password: z.string().min(6),
 });
 
 export const authenticate = async (
@@ -16,12 +16,23 @@ export const authenticate = async (
 
   try {
     const authenticateUseCase = makeAuthenticateUseCase();
-    await authenticateUseCase.execute({ email, password });
+    const { user } = await authenticateUseCase.execute({ email, password });
+
+    const token = await res.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id,
+        },
+      }
+    );
+
+    res.status(200).send({
+      token,
+    });
   } catch (error) {
     if (error instanceof InvalidCredentialsError)
       return res.status(400).send({ message: error.message });
     throw error;
   }
-
-  res.status(200).send();
 };
