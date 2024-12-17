@@ -26,6 +26,8 @@
 
 - [Prisma client](https://www.prisma.io/docs/orm/prisma-client): Is an auto-generated, type-safe query builder generated based on the models and attributes of the our Prisma schema.
 
+- [@fastify/jwt](https://github.com/fastify/fastify-jwt): JWT utils for Fastify, integrating both.
+
 ## Dev Dependencies
 
 - [ESLint](https://eslint.org/): Code analysis tool responsible for identifying errors and inconsistencies.
