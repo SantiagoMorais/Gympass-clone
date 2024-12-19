@@ -14,7 +14,7 @@ describe("Register controller (e2e)", () => {
   it("should be able to register", async () => {
     const response = await request(app.server).post("/users").send({
       name: "John Doe",
-      email: "johndoe@example.com",
+      email: "johndoe1@example.com",
       password: "123456",
     });
 
