@@ -1,11 +1,15 @@
-import { log } from "console";
 import { FastifyReply, FastifyRequest } from "fastify";
+import { makeGetUserProfileUseCase } from "use-cases/factories/user/make-get-user-profile-use-case";
 
 export const profile = async (req: FastifyRequest, res: FastifyReply) => {
-  await req.jwtVerify(); // this function:
-  // 1. Search the token inside of my headers;
-  // 2. If the token exists, it'll be validated;
-  // 3. If the token doesn't exist, the code below won't run
+  const getUserProfile = makeGetUserProfileUseCase();
+  const { user } = await getUserProfile.execute({
+    userId: req.user.sub,
+  });
 
-  return res.status(200).send();
+  const { password_hash, ...userWithoutPassword } = user;
+
+  return res.status(200).send({
+    user: userWithoutPassword,
+  });
 };
