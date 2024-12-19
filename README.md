@@ -40,6 +40,11 @@
 
 - [Prisma](https://www.prisma.io/?via=start&gad_source=1): It simplify database queries, migrations, subscriptions, query catching and more.
 
+- [npm-run-all](https://www.npmjs.com/package/npm-run-all): The official npm run-script command cannot run multiple scripts, so if we want to run multiple scripts, it's redundant a bit. The npm-run all short it by glob-like patterns.
+
+- [supertest](https://www.npmjs.com/package/supertest): The motivation with this module is to provide a high-level abstraction for testing HTTP while also allowing you to access the lower-level API provided by the superagent. In other words, testing the server without having to run it on a specific port, avoiding conflicts.
+
+
 ## Project Objectives
 
 Applications like Gympass have users who can pay a monthly fee to access gyms registered in the application.

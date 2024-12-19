@@ -22,7 +22,7 @@ export const register = async (
   } catch (error) {
     if (error instanceof UserAlreadyExistsError)
       return res.status(409).send({ message: error.message });
-    throw error;
+    throw new UserAlreadyExistsError();
   }
 
   res.status(201).send();

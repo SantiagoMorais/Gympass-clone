@@ -6,7 +6,7 @@ import { verifyJWT } from "./middlewares/verify-jwt";
 
 export const appRoutes: FastifyPluginAsyncZod = async (app) => {
   app.post("/sessions", authenticate);
-  app.post("/register", register);
+  app.post("/users", register);
 
   // authenticated
   app.get("/me", { onRequest: [verifyJWT] }, profile);
