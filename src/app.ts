@@ -7,8 +7,9 @@ import {
   validatorCompiler,
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
-import { appRoutes } from "http/controllers/users/routes";
+import { usersRoutes } from "http/controllers/users/routes";
 import fastifyJWT from "@fastify/jwt";
+import { gymsRoutes } from "http/controllers/gyms/routes";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -24,7 +25,9 @@ app.register(fastifyCors, {
   credentials: true,
 });
 
-app.register(appRoutes);
+app.register(usersRoutes);
+app.register(gymsRoutes);
+
 app.setErrorHandler((error, _, res) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
     return res

@@ -4,8 +4,10 @@ import { register } from "../users/register";
 import { profile } from "../users/profile";
 import { verifyJWT } from "http/middlewares/verify-jwt";
 
-export const appRoutes: FastifyPluginAsyncZod = async (app) => {
+export const usersRoutes: FastifyPluginAsyncZod = async (app) => {
   app.post("/sessions", authenticate);
   app.post("/users", register);
+
+  // Authenticated routes
   app.get("/me", { onRequest: [verifyJWT] }, profile);
 };
