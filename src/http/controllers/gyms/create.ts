@@ -29,5 +29,5 @@ export const create = async (
     title,
   });
 
-  res.status(201).send();
+  return res.status(201).send();
 };
