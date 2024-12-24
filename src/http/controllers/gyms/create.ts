@@ -19,9 +19,9 @@ export const create = async (
   res: FastifyReply
 ) => {
   const { description, latitude, longitude, phone, title } = req.body;
-  const registerUseCase = makeCreateGymUseCase();
+  const createGymUseCase = makeCreateGymUseCase();
 
-  await registerUseCase.execute({
+  await createGymUseCase.execute({
     description,
     latitude,
     longitude,
