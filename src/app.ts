@@ -7,7 +7,7 @@ import {
   validatorCompiler,
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
-import { appRoutes } from "http/routes";
+import { appRoutes } from "http/controllers/users/routes";
 import fastifyJWT from "@fastify/jwt";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();

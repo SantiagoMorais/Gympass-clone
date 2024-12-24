@@ -5,12 +5,13 @@
   "main": "src/server.ts",
   "scripts": {
     "server:dev": "tsx watch src/server.ts",
+    "migrate:test": "prisma migrate dev --schema=./prisma/test/schema.test.prisma",
     "build": "tsup src --out-dir build",
     "server": "node build/server.cjs",
     "test": "vitest run --dir src/use-cases",
+    "test:watch": "vitest --dir src/use-cases",
     "test:e2e": "vitest run --dir src/http",
     "test:e2e:watch": "vitest --dir src/http",
-    "test:watch": "vitest --dir src/use-cases",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
