@@ -1,14 +1,23 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { app } from "app";
 import request from "supertest";
+import {
+  cleanupDatabase,
+  setupApp,
+  teardownApp,
+} from "http/tests/e2e-test-utils";
 
 describe("Register controller (e2e)", () => {
   beforeAll(async () => {
-    await app.ready();
+    await setupApp();
+  });
+
+  beforeEach(async () => {
+    await cleanupDatabase();
   });
 
   afterAll(async () => {
-    await app.close();
+    await teardownApp();
   });
 
   it("should be able to register", async () => {

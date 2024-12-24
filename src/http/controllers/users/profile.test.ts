@@ -1,29 +1,28 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { app } from "app";
 import request from "supertest";
+import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-user";
+import {
+  cleanupDatabase,
+  setupApp,
+  teardownApp,
+} from "http/tests/e2e-test-utils";
 
 describe("Profile controller (e2e)", () => {
   beforeAll(async () => {
-    await app.ready();
+    await setupApp();
+  });
+
+  beforeEach(async () => {
+    await cleanupDatabase();
   });
 
   afterAll(async () => {
-    await app.close();
+    await teardownApp();
   });
 
   it("should be able to get user profile", async () => {
-    await request(app.server).post("/users").send({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: "123456",
-    });
-
-    const authResponse = await request(app.server).post("/sessions").send({
-      email: "johndoe@example.com",
-      password: "123456",
-    });
-
-    const { token } = authResponse.body;
+    const { token } = await createAndAuthenticateUser(app);
 
     const profileResponse = await request(app.server)
       .get("/me")
