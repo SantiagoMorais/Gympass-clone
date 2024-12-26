@@ -1,5 +1,4 @@
 import { TGymResponse, TGymUseCaseRequest } from "core/types/gym-use-case";
-import { toDecimal } from "geolib";
 import { GymsRepository } from "repositories/gyms-repository";
 
 export class CreateGymUseCase {

@@ -1,4 +1,4 @@
-export interface FindManyNearbyParams {
+export interface IFindManyNearbyParams {
   latitude: number;
   longitude: number;
 }

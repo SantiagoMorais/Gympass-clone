@@ -8,7 +8,7 @@ import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-us
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import request from "supertest";
 
-describe("Search Gyms (e2e)", () => {
+describe("Search Nearby Gyms (e2e)", () => {
   beforeAll(async () => {
     await setupApp();
   });
@@ -21,14 +21,14 @@ describe("Search Gyms (e2e)", () => {
     await teardownApp();
   });
 
-  it("should be able to search gyms by title", async () => {
+  it("should be able to list nearby gyms", async () => {
     const { token } = await createAndAuthenticateUser(app);
 
     await request(app.server)
       .post("/gyms")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        title: "JavaScript Gym",
+        title: "Near Gym",
         latitude: -14.235,
         longitude: -51.9253,
         description: null,
@@ -39,26 +39,26 @@ describe("Search Gyms (e2e)", () => {
       .post("/gyms")
       .set("Authorization", `Bearer ${token}`)
       .send({
-        title: "TypeScript Gym",
-        latitude: -14.235,
+        title: "Far Gym",
+        latitude: -14.325,
         longitude: -51.9253,
         description: null,
         phone: null,
       });
 
-    const gymResponse = await request(app.server)
-      .get("/gyms/search")
+    const response = await request(app.server)
+      .get("/gyms/nearby")
       .set("Authorization", `Bearer ${token}`)
       .query({
-        query: "TypeScript",
-        page: 1,
+        latitude: -14.235,
+        longitude: -51.9253,
       });
 
-    expect(gymResponse.statusCode).toEqual(200);
-    expect(gymResponse.body.gyms).toHaveLength(1);
-    expect(gymResponse.body.gyms).toEqual([
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.gyms).toHaveLength(1);
+    expect(response.body.gyms).toEqual([
       expect.objectContaining({
-        title: "TypeScript Gym",
+        title: "Near Gym",
       }),
     ]);
   });

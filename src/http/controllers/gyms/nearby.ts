@@ -1,12 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { makeFetchNearbyGymUseCase } from "use-cases/factories/gym/make-fetch-nearby-gyms-use-case";
+import { makeFetchNearbyGymsUseCase } from "use-cases/factories/gym/make-fetch-nearby-gyms-use-case";
 import { z } from "zod";
 
 const nearbyGymsQuerySchema = z.object({
-  latitude: z.number().refine((value) => {
+  latitude: z.coerce.number().refine((value) => {
     return Math.abs(value) <= 90;
   }),
-  longitude: z.number().refine((value) => {
+  longitude: z.coerce.number().refine((value) => {
     return Math.abs(value) <= 180;
   }),
 });
@@ -16,14 +16,22 @@ export const nearby = async (
   res: FastifyReply
 ) => {
   const { latitude, longitude } = req.query;
-  const fetchNearbyGyms = makeFetchNearbyGymUseCase();
+  const fetchNearbyGymsUseCase = makeFetchNearbyGymsUseCase();
 
-  const { gyms } = await fetchNearbyGyms.execute({
-    userLatitude: latitude,
-    userLongitude: longitude,
-  });
+  try {
+    const { gyms } = await fetchNearbyGymsUseCase.execute({
+      userLatitude: latitude,
+      userLongitude: longitude,
+    });
 
-  return res.status(200).send({
-    gyms,
-  });
+    return res.status(200).send({
+      gyms,
+    });
+  } catch (error) {
+    console.error("Error fetching nearby gyms:", error);
+
+    return res.status(400).send({
+      message: "An error occurred while fetching nearby gyms.",
+    });
+  }
 };
