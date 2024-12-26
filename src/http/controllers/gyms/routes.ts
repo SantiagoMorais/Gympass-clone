@@ -9,5 +9,6 @@ export const gymsRoutes: FastifyPluginAsyncZod = async (app) => {
   
   app.get("/gyms/search", search);
   app.get("/gyms/nearby", nearby);
+  
   app.post("/gyms", create);
 };

@@ -10,6 +10,7 @@ import {
 import { usersRoutes } from "http/controllers/users/routes";
 import fastifyJWT from "@fastify/jwt";
 import { gymsRoutes } from "http/controllers/gyms/routes";
+import { checkInsRoutes } from "http/controllers/check-ins/routes";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -27,6 +28,7 @@ app.register(fastifyCors, {
 
 app.register(usersRoutes);
 app.register(gymsRoutes);
+app.register(checkInsRoutes);
 
 app.setErrorHandler((error, _, res) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
