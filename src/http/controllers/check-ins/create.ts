@@ -21,13 +21,21 @@ export const create = async (
   const { userLatitude, userLongitude } = req.body;
   const { gymId } = req.params;
 
-  const checkInUseCase = makeCheckInUseCase();
-  await checkInUseCase.execute({
-    gymId,
-    userId: req.user.sub,
-    userLatitude,
-    userLongitude,
-  });
+  try {
+    const checkInUseCase = makeCheckInUseCase();
+    await checkInUseCase.execute({
+      gymId,
+      userId: req.user.sub,
+      userLatitude,
+      userLongitude,
+    });
 
-  return res.status(201).send();
+    return res.status(201).send();
+  } catch (error) {
+    console.error(`Error creating check-in:`, error);
+
+    return res.status(400).send({
+      message: "An error occurred while creating the check-in.",
+    });
+  }
 };
