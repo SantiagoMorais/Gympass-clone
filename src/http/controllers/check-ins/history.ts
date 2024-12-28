@@ -3,7 +3,7 @@ import { makeFetchUserCheckInsHistoryUseCase } from "use-cases/factories/check-i
 import { z } from "zod";
 
 const historyCheckInQuerySchema = z.object({
-  page: z.number().int().positive(),
+  page: z.number().int().positive().default(1),
 });
 
 export const history = async (
