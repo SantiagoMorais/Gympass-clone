@@ -1,16 +1,11 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { app } from "app";
 import request from "supertest";
 import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-user";
-import { cleanupDatabase } from "http/tests/e2e-test-utils";
 
 describe("Profile controller (e2e)", () => {
   beforeAll(async () => {
     await app.ready();
-  });
-
-  beforeEach(async () => {
-    await cleanupDatabase();
   });
 
   afterAll(async () => {

@@ -1,9 +1,10 @@
 import { app } from "app";
 import request from "supertest";
+import { prisma } from "lib/prisma";
 import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-user";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-describe("Create Gym (e2e)", () => {
+describe("Validate Check-in (e2e)", () => {
   beforeAll(async () => {
     await app.ready();
   });
@@ -12,20 +13,25 @@ describe("Create Gym (e2e)", () => {
     await app.close();
   });
 
-  it("should be able to create a gym", async () => {
+  it("should be able to create a check-in", async () => {
     const { token } = await createAndAuthenticateUser(app);
 
-    const gymResponse = await request(app.server)
-      .post("/gyms")
-      .set("Authorization", `Bearer ${token}`)
-      .send({
-        title: "Test Gym",
+    const gym = await prisma.gym.create({
+      data: {
+        title: "Verify Check-In Gym",
         latitude: -14.235,
         longitude: -51.9253,
-        description: null,
-        phone: null,
+      },
+    });
+
+    const response = await request(app.server)
+      .post(`/gyms/${gym.id}/check-ins`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        latitude: -14.235,
+        longitude: -51.9253,
       });
 
-    expect(gymResponse.statusCode).toEqual(201);
+    expect(response.statusCode).toEqual(201);
   });
 });
