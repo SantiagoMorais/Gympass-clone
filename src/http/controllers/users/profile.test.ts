@@ -2,15 +2,11 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { app } from "app";
 import request from "supertest";
 import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-user";
-import {
-  cleanupDatabase,
-  setupApp,
-  teardownApp,
-} from "http/tests/e2e-test-utils";
+import { cleanupDatabase } from "http/tests/e2e-test-utils";
 
 describe("Profile controller (e2e)", () => {
   beforeAll(async () => {
-    await setupApp();
+    await app.ready();
   });
 
   beforeEach(async () => {
@@ -18,7 +14,7 @@ describe("Profile controller (e2e)", () => {
   });
 
   afterAll(async () => {
-    await teardownApp();
+    await app.close();
   });
 
   it("should be able to get user profile", async () => {

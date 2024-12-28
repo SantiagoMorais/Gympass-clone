@@ -1,16 +1,12 @@
 import { app } from "app";
-import {
-  cleanupDatabase,
-  setupApp,
-  teardownApp,
-} from "http/tests/e2e-test-utils";
+import { cleanupDatabase } from "http/tests/e2e-test-utils";
+import request from "supertest";
 import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-user";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import request from "supertest";
 
 describe("Search Gyms (e2e)", () => {
   beforeAll(async () => {
-    await setupApp();
+    await app.ready();
   });
 
   beforeEach(async () => {
@@ -18,7 +14,7 @@ describe("Search Gyms (e2e)", () => {
   });
 
   afterAll(async () => {
-    await teardownApp();
+    await app.close();
   });
 
   it("should be able to search gyms by title", async () => {

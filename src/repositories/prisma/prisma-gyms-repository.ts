@@ -1,5 +1,5 @@
 import { Gym, Prisma } from "@prisma/client";
-import { FindManyNearbyParams } from "core/interfaces/find-many-nearby-params";
+import { IFindManyNearbyParams } from "core/interfaces/find-many-nearby-params";
 import { prisma } from "lib/prisma";
 import { GymsRepository } from "repositories/gyms-repository";
 
@@ -17,6 +17,7 @@ export class PrismaGymsRepository implements GymsRepository {
 
     return gym;
   }
+
   async searchMany(query: string, page: number) {
     const gyms = await prisma.gym.findMany({
       where: {
@@ -30,16 +31,17 @@ export class PrismaGymsRepository implements GymsRepository {
 
     return gyms;
   }
-  async findManyNearby({ latitude, longitude }: FindManyNearbyParams) {
+
+  async findManyNearby({ latitude, longitude }: IFindManyNearbyParams) {
     const gyms = await prisma.$queryRaw<Gym[]>`
-        SELECT * FROM gyms
-        WHERE ( 6371 * acos( 
-            cos( radians(${latitude}) ) 
-            * cos( radians( latitude ) ) 
-            * cos( radians( longitude ) - radians(${longitude}) ) 
-            + sin( radians(${latitude}) ) 
-            * sin( radians( latitude ) ) ) ) <= 10
-    `;
+    SELECT * FROM gyms
+    WHERE ( 6371 * acos( 
+        cos( radians(CAST(${latitude} AS DOUBLE PRECISION)) ) 
+        * cos( radians( latitude ) ) 
+        * cos( radians( longitude ) - radians(CAST(${longitude} AS DOUBLE PRECISION)) ) 
+        + sin( radians(CAST(${latitude} AS DOUBLE PRECISION)) ) 
+        * sin( radians( latitude ) ) ) ) <= 10
+  `;
 
     return gyms;
   }

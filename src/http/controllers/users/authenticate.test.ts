@@ -1,15 +1,11 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { app } from "app";
+import { cleanupDatabase } from "http/tests/e2e-test-utils";
 import request from "supertest";
-import {
-  cleanupDatabase,
-  setupApp,
-  teardownApp,
-} from "http/tests/e2e-test-utils";
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 describe("Authenticate controller (e2e)", () => {
   beforeAll(async () => {
-    await setupApp();
+    await app.ready();
   });
 
   beforeEach(async () => {
@@ -17,7 +13,7 @@ describe("Authenticate controller (e2e)", () => {
   });
 
   afterAll(async () => {
-    await teardownApp();
+    await app.close();
   });
 
   it("should be able to authenticate", async () => {

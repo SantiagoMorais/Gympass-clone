@@ -1,16 +1,12 @@
 import { app } from "app";
-import {
-  cleanupDatabase,
-  setupApp,
-  teardownApp,
-} from "http/tests/e2e-test-utils";
+import { cleanupDatabase } from "http/tests/e2e-test-utils";
+import request from "supertest";
 import { createAndAuthenticateUser } from "utils/test/create-and-authenticate-user";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
-import request from "supertest";
 
 describe("Search Nearby Gyms (e2e)", () => {
   beforeAll(async () => {
-    await setupApp();
+    await app.ready();
   });
 
   beforeEach(async () => {
@@ -18,7 +14,7 @@ describe("Search Nearby Gyms (e2e)", () => {
   });
 
   afterAll(async () => {
-    await teardownApp();
+    await app.close();
   });
 
   it("should be able to list nearby gyms", async () => {
@@ -29,8 +25,8 @@ describe("Search Nearby Gyms (e2e)", () => {
       .set("Authorization", `Bearer ${token}`)
       .send({
         title: "Near Gym",
-        latitude: -14.235,
-        longitude: -51.9253,
+        latitude: -78.45,
+        longitude: 166.7767,
         description: null,
         phone: null,
       });
@@ -50,8 +46,8 @@ describe("Search Nearby Gyms (e2e)", () => {
       .get("/gyms/nearby")
       .set("Authorization", `Bearer ${token}`)
       .query({
-        latitude: -14.235,
-        longitude: -51.9253,
+        latitude: -78.45,
+        longitude: 166.7767,
       });
 
     expect(response.statusCode).toEqual(200);
