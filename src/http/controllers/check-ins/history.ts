@@ -14,13 +14,22 @@ export const history = async (
 ) => {
   const { page } = req.query;
 
-  const fetchUserCheckInsHistoryUseCase = makeFetchUserCheckInsHistoryUseCase();
-  const { checkIns } = await fetchUserCheckInsHistoryUseCase.execute({
-    page,
-    userId: req.user.sub,
-  });
+  try {
+    const fetchUserCheckInsHistoryUseCase =
+      makeFetchUserCheckInsHistoryUseCase();
+    const { checkIns } = await fetchUserCheckInsHistoryUseCase.execute({
+      page,
+      userId: req.user.sub,
+    });
 
-  return res.status(200).send({
-    checkIns,
-  });
+    return res.status(200).send({
+      checkIns,
+    });
+  } catch (error) {
+    console.log("Error while fetching check-ins history", error);
+
+    return res.status(500).send({
+      message: "Internal server error while fetching check-ins history",
+    });
+  }
 };

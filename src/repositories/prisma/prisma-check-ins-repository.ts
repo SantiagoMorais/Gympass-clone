@@ -38,12 +38,13 @@ export class PrismaCheckInRepository implements CheckInsRepository {
   async findManyByUserId(userId: string, page: number) {
     const checkIns = await prisma.checkIn.findMany({
       where: { user_id: userId },
-      take: 20,
       skip: (page - 1) * 20,
+      take: 20,
     });
 
     return checkIns;
   }
+
   async countByUserId(userId: string) {
     const count = await prisma.checkIn.count({
       where: { user_id: userId },
@@ -51,6 +52,7 @@ export class PrismaCheckInRepository implements CheckInsRepository {
 
     return count;
   }
+
   async findById(id: string) {
     const checkIn = await prisma.checkIn.findUnique({
       where: { id },
