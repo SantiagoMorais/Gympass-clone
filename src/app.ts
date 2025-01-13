@@ -1,4 +1,6 @@
+import fastifyCookie from "@fastify/cookie";
 import fastifyCors from "@fastify/cors";
+import fastifyJWT from "@fastify/jwt";
 import { env } from "env";
 import fastify from "fastify";
 import {
@@ -7,16 +9,22 @@ import {
   validatorCompiler,
   ZodTypeProvider,
 } from "fastify-type-provider-zod";
-import { usersRoutes } from "http/controllers/users/routes";
-import fastifyJWT from "@fastify/jwt";
-import { gymsRoutes } from "http/controllers/gyms/routes";
 import { checkInsRoutes } from "http/controllers/check-ins/routes";
+import { gymsRoutes } from "http/controllers/gyms/routes";
+import { usersRoutes } from "http/controllers/users/routes";
 
 export const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(fastifyJWT, {
   secret: env.JWT_SECRET,
+  sign: { expiresIn: "10m" },
+  cookie: {
+    cookieName: "refreshToken",
+    signed: false,
+  }
 });
+
+app.register(fastifyCookie);
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

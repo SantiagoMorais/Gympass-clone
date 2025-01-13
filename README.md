@@ -28,6 +28,8 @@
 
 - [@fastify/jwt](https://github.com/fastify/fastify-jwt): JWT utils for Fastify, integrating both.
 
+- [@fastify/cookie](https://www.npmjs.com/package/@fastify/cookie): A plugin for Fastify that adds support for reading and setting cookies.
+
 ## Dev Dependencies
 
 - [ESLint](https://eslint.org/): Code analysis tool responsible for identifying errors and inconsistencies.
@@ -43,7 +45,6 @@
 - [npm-run-all](https://www.npmjs.com/package/npm-run-all): The official npm run-script command cannot run multiple scripts, so if we want to run multiple scripts, it's redundant a bit. The npm-run all short it by glob-like patterns.
 
 - [supertest](https://www.npmjs.com/package/supertest): The motivation with this module is to provide a high-level abstraction for testing HTTP while also allowing you to access the lower-level API provided by the superagent. In other words, testing the server without having to run it on a specific port, avoiding conflicts.
-
 
 ## Project Objectives
 
