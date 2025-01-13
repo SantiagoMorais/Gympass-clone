@@ -7,10 +7,10 @@ const validateCheckInParamsSchema = z.object({
 });
 
 export const validate = async (
-  req: FastifyRequest<{ Params: z.infer<typeof validateCheckInParamsSchema> }>,
+  req: FastifyRequest,
   res: FastifyReply
 ) => {
-  const { checkInId } = req.params;
+  const { checkInId } = validateCheckInParamsSchema.parse(req.params);
 
   const validateCheckInUseCase = makeValidateCheckInUseCase();
   await validateCheckInUseCase.execute({ checkInId });
