@@ -1,0 +1,33 @@
+# Define o nome da ação
+name: Run Unit Tests
+
+# Define quando a ação será executada, nesse caso, toda vez que um push for feito
+on: [push]
+
+# jobs: Define os trabalhos que serão executados
+jobs:
+  run-unit-tests:
+    # Define o nome do trabalho
+    name: Run Unit Tests
+    # Define o ambiente onde a ação será executada
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Baixa o código dentro da nossa máquina
+      - uses: actions/checkout@v3 
+
+        # Passo 2: Configura o ambiente do Node.js
+      - uses: actions/setup-node@v3
+        # Define as configurações do Node.js que queremos trabalhar com:
+        with:
+          # Define a versão do Node.js
+          node-version: 20
+          # Define o cache do npm
+          cache: "npm"
+      
+      # Passo 3: Instala as dependências do projeto
+      # ci: Instala as dependências de forma mais rápida 
+      - run: npm ci
+
+      # Passo 4: Executa os testes
+      run: npm run test
