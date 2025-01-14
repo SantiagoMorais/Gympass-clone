@@ -368,6 +368,118 @@ In this example, we are using just two instances, two dependencies, but soon the
 
 ## How to run the project?
 
+### Prerequisites
+
+Make sure you have the following installed and configured:
+
+- [Node.js](https://nodejs.org/): A runtime for running JavaScript on the server.
+- [Docker](https://docs.docker.com/desktop/): A platform for containerizing applications.
+
+### Steps to Run the Project
+
+1. **Clone the repository**: Run the following command to clone the project into your machine:
+
+```bash
+git clone https://github.com/SantiagoMorais/Gympass-clone.git
+```
+
+2. **Install dependencies**: Navigate to the project folder and install the necessary dependencies:
+
+```bash
+npm install
+```
+
+3. **Initialize the Docker container**: Run Docker Compose to start the container in detached mode:
+
+```bash
+docker compose up -d
+```
+
+4. **Start the container (if necessary)**:
+   - When you first create the container using Docker Compose, it starts automatically.
+   - To start the container manually in the future:
+
+I. List all created containers:
+
+```bash
+docker ps -a
+```
+
+II. Find the container named **gympass-clone-api-solid-pg-1**
+
+III. Copy the container ID and run the following command (replacing `<container_id>`):
+
+```bash
+docker start <container_id>
+```
+
+IV. Verify that the container is running:
+
+```bash
+docker ps
+```
+
+5. **Configure environment variables**: Create a `.env` file in the project root based on the `.env.example` file provided.
+
+6. **Run database migrations**: Execute the following command to apply Prisma migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+7. **Start the development server**: Launch the server in development mode:
+
+```bash
+npm run server:dev
+```
+
+8. **Run tests**: Verify that everything is working correctly by running the tests:
+
+Unit tests:
+
+```bash
+npm run test
+```
+
+Or run in watch mode:
+
+```bash
+npm run test:watch
+```
+
+End-to-End (E2E) tests:
+
+```bash
+npm run test:e2e:watch
+```
+
+Or run in watch mode:
+
+```bash
+npm run test:e2e:watch
+```
+
+### Extra: Creating a User with ADMIN Role (Just for Development Ambience)
+
+Some routes are restricted to ADMIN users, but by default, all users are created with the MEMBER role. Follow these steps to change a user's role to ADMIN:
+
+1. **Open Prisma Studio**: Run the following command:
+
+```bash
+npx prisma studio
+```
+
+This will open a new page in your default browser, showing the database tables.
+
+2. **Create a new user**: Use Prisma Studio to create a new user. A new page will open in your default browser, showing the database tables.
+
+3. **Edit the user's role**: Locate the user you just created, and in the `role` column, click on the value **MEMBER** to change it to **ADMIN**.
+
+   Example:  
+   ![How to change the role of a user](./src/assets/imgs/admin-role.png)
+
+4. **Save changes**: A green button will appear to save the changes. Click it to apply the changes.
+
 ## Author
 
 - GitHub - [Felipe Santiago Morais](https://github.com/SantiagoMorais)
