@@ -2,8 +2,6 @@
 
 ![banner](./src/assets/imgs/banner.png)
 
-## Images
-
 ## Summary
 
 - [Images](#images)
