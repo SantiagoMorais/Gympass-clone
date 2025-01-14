@@ -1,6 +1,6 @@
 # Gympass clone with Node | Fastify | Solid | JWT
 
-![banner]()
+![banner](./src/assets/imgs/banner.png)
 
 ## Images
 
@@ -79,8 +79,8 @@ Defines the conditions under which each functional requirement operates. Every f
 - [x] The user can't check-in twice a day;
 - [x] The user will only be able to check in at least 100m away from the gym;
 - [x] The check-in can be validate just 20 minutes after created;
-- [ ] The check-in can only be validade by a administrator;
-- [ ] The gym can only be registered by a administrator;
+- [x] The check-in can only be validade by a administrator;
+- [x] The gym can only be registered by a administrator;
 
 ### Non-Functional Requirements
 
@@ -89,9 +89,171 @@ Technical requirements independent of the client, focusing on performance, relia
 - [x] The user password mus be encrypted;
 - [x] The app data must be persisted in a PostgreSQL database;
 - [x] Every data lists must be paginated by 20 items per page;
-- [ ] The user must be identified by a JWT (JSON Web Token);
+- [x] The user must be identified by a JWT (JSON Web Token);
 
 ## Routes
+
+### Users
+
+- Register new user: `/users`
+
+  - Method: POST
+  - Body:
+    - Name: string
+    - Email: string
+    - Password (min 6 characters): string
+  - Status Code: `201`
+
+- Login/Authentication: `/sessions`
+  - Method: POST
+  - Body:
+    - Email: string
+    - Password: string
+  - Status Code: `200`
+  - Data Returned:
+
+```typescript
+interface IUserAuthentication {
+  token: string;
+}
+```
+
+- Refresh token: `/token/refresh`
+  - Method: PATCH
+  - Status Code: `200`
+  - Data Returned:
+
+```typescript
+interface IRefreshToken {
+  token: string;
+}
+```
+
+- User profile: `/me`
+  - **Safe Route**: Authentication Required
+  - Method: GET
+  - Status Code: `200`
+  - Data Returned:
+
+```typescript
+interface IUserProfile {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: ADMIN | MEMBER;
+    created_at: string;
+  };
+}
+```
+
+### Gyms
+
+- Create a new gym: `/gyms`
+
+  - **Safe Route**: Authentication Required / ADMIN Role Required
+  - Method: POST
+  - Body:
+    - Title: string
+    - Description: string
+    - Phone: string
+    - Latitude (Between -90 and 90): number
+    - Longitude (Between -180 and 180): number
+  - Status Code: `201`
+
+- Search gyms: `/gyms/search`
+  - **Safe Route**: Authentication Required
+  - Method: GET
+  - Query:
+    - Query: string
+    - page: number (20 gyms per page)
+  - Status Code: `200`
+  - Data Returned:
+
+```typescript
+interface ISearchGyms {
+  gyms: {
+    id: string;
+    title: string;
+    description: string;
+    phone: string;
+    latitude: string;
+    longitude: string;
+  }[];
+}
+```
+
+Example: `http://localhost:3333/gyms/search?page=1&query=gym`
+
+- Search nearby gyms: `/gyms/nearby`
+  - **Safe Route**: Authentication Required
+  - Method: GET
+  - Query:
+    - latitude (Between -90 and 90 - user latitude)
+    - longitude (Between -180 and 180 - user longitude)
+  - Status Code: `200`
+  - Data Returned:
+
+```typescript
+interface INearbyGyms {
+  gyms: {
+    id: string;
+    title: string;
+    description: string;
+    phone: string;
+    latitude: string;
+    longitude: string;
+  }[];
+}
+```
+
+### Check-ins
+
+- Create a Check-in: `/gyms/:gymId/check-ins`,
+
+  - **Safe Route**: Authentication Required
+  - Method: POST
+  - Body:
+    - userLatitude (Between -90 and 90): number
+    - userLongitude (Between -180 and 180): number
+  - Status Code: 201
+
+- Check-ins History: `/check-ins/history`
+  - **Safe Route**: Authentication Required
+  - Method: GET
+  - Query:
+    - Page: number (20 check-ins per page)
+  - Status Code: 200
+  - Data Returned:
+
+```typescript
+interface ICheckInsHistory {
+  checkIns: {
+    id: string;
+    created_at: string;
+    validate_at: string | null;
+    user_id: string;
+    gym_id: string;
+  }[];
+}
+```
+
+- Check-ins Metrics: `/check-ins/history`
+  - **Safe Route**: Authentication Required
+  - Method: GET
+  - Status Code: 200
+  - Data Returned:
+
+```typescript
+interface ICheckInsMetrics {
+  checkInsCount: number;
+}
+```
+
+- Validate Check-in: `/check-ins/:checkInId/validate`
+  - **Safe Route**: Authentication Required / ADMIN Role Required
+  - Method: PATCH
+  - Status Code: 204
 
 ## Folders Organization
 
