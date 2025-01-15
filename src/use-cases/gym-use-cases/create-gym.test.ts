@@ -1,9 +1,7 @@
-import { GymsRepository } from "repositories/gyms-repository";
-import { inMemoryGymsRepository } from "repositories/in-memory/in-memory-gyms-repository";
-import { CreateGymUseCase } from "./create-gym";
 import { describe } from "node:test";
+import { inMemoryGymsRepository } from "repositories/in-memory/in-memory-gyms-repository";
 import { beforeEach, expect, it } from "vitest";
-import { Decimal } from "@prisma/client/runtime/library";
+import { CreateGymUseCase } from "./create-gym";
 
 let gymsRepository: inMemoryGymsRepository;
 let sut: CreateGymUseCase;
