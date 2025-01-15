@@ -21,7 +21,7 @@ app.register(fastifyJWT, {
   cookie: {
     cookieName: "refreshToken",
     signed: false,
-  }
+  },
 });
 
 app.register(fastifyCookie);

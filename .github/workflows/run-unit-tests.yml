@@ -22,7 +22,7 @@ jobs:
           # Define a versão do Node.js
           node-version: 20
           cache: "npm"
-      
+
       # Passo 3: Instala as dependências do projeto (ci: Instala as dependências de forma mais rápida)
       - run: npm ci
 
